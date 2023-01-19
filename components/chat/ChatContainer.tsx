@@ -14,6 +14,7 @@ const ChatContainer = () => {
   const [data, setData] = useState<Data[]>([]);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const onsubmit = async () => {
     if (prompt.trim() === "") {
@@ -23,6 +24,7 @@ const ChatContainer = () => {
     const copy = [...data];
 
     setData([...copy, { text: prompt, isAi: false, id: generateUniqueId() }]);
+    setSubmitted(true);
     try {
       setLoading(true);
       const res = await (
@@ -46,6 +48,7 @@ const ChatContainer = () => {
       setLoading(false);
     } finally {
       setLoading(false);
+      setSubmitted(false);
     }
   };
 
@@ -79,7 +82,7 @@ const ChatContainer = () => {
         inputClassName="mt-2 rounded-lg shadow-xl"
         onChange={(e) => setPrompt(e.target.value)}
         onKeyUp={onKeyUp}
-        value={prompt}
+        value={submitted ? "" : prompt}
         suffix={
           <button className="ml-2 mt-4" onClick={onsubmit}>
             <MdOutlineSend size={50} />
