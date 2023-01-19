@@ -4,7 +4,7 @@
 
 2. Then run ```yarn install``` to install the dependencies
 
-3. Go to the [Openai website and get the API ke](https://openai.com/)
+3. Go to the [Openai website and get the API key](https://openai.com/)
 
 4. Create ``` .env``` file and put your environment of ```OPENAI_API_KEY``` 
 
