@@ -1,4 +1,6 @@
 
+## About
+Chat GPT (Generative Pre-trained Transformer) is a type of natural language processing (NLP) model that uses deep learning to generate human-like responses to user input. It is based on the transformer architecture, which was developed by Google in 2017 and has since become the de facto standard for NLP tasks. Chat GPT models are trained on large datasets of conversational data and can generate realistic responses to user queries.
 ## Getting Started
 1. Firstly clone this repository to your local machine
 
