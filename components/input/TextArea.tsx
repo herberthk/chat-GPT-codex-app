@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { FC, ReactNode, TextareaHTMLAttributes } from "react";
 import { getValidStyle } from "../util/helpers";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { motion } from "framer-motion";
 
 export interface TextAreaProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -39,13 +41,23 @@ const TextArea: FC<TextAreaProps> = ({
   ...rest
 }) => {
   return (
-    <div className="mx-auto flex w-full flex-col">
+    <motion.div
+      initial={{ y: -18000 }}
+      animate={{ y: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+        // duration: 500,
+      }}
+      className="mx-auto flex w-full flex-col"
+    >
       {label && <p className="text-lg">{label}</p>}
       <div className="flex w-full justify-between">
         {preFix}
-        <textarea
+        <TextareaAutosize
           className={classNames(
-            "input min-h-[72px] flex-1",
+            "input flex-1",
             getValidStyle(isValid),
             inputClassName
           )}
@@ -53,7 +65,7 @@ const TextArea: FC<TextAreaProps> = ({
         />
         {suffix}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

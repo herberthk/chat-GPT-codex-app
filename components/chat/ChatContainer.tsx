@@ -1,9 +1,14 @@
-import { useRef, useState, KeyboardEvent } from "react";
+import Box from "@mui/material/Box";
+import { useRef, useState, KeyboardEvent, useEffect } from "react";
 import { MdOutlineSend } from "react-icons/md";
 import TextArea from "../input/TextArea";
 import HorizontalLoader from "../loaders/HolizontalLoader";
 import { generateUniqueId } from "../util/helpers";
 import Chat from "./Chat";
+import Image from "next/image";
+import Container from "@mui/material/Container";
+import Header from "./Header";
+import { motion } from "framer-motion";
 interface Data {
   isAi: boolean;
   text: string;
@@ -16,6 +21,10 @@ const ChatContainer = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const scrollBottom = () => ref.current?.scrollTo(0, ref.current.scrollHeight);
+  useEffect(() => {
+    scrollBottom();
+  }, [data.length]);
   const onsubmit = async () => {
     if (prompt.trim() === "") {
       // console.log("Ask a question");
@@ -25,6 +34,7 @@ const ChatContainer = () => {
 
     setData([...copy, { text: prompt, isAi: false, id: generateUniqueId() }]);
     setSubmitted(true);
+    // scrollBottom();
     try {
       setLoading(true);
       const res = await (
@@ -49,6 +59,7 @@ const ChatContainer = () => {
     } finally {
       setLoading(false);
       setSubmitted(false);
+      // scrollBottom();
     }
   };
 
@@ -58,43 +69,73 @@ const ChatContainer = () => {
       onsubmit();
     }
   };
-  // console.log("data", data);
-  // oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"
+
   return (
-    <>
-      <div
-        className="scroller flex w-full flex-1 flex-col space-y-6 overflow-y-auto p-4"
-        ref={ref}
-      >
-        <div className="mx-auto mb-3 max-w-sm p-3 shadow-md">
-          <p className="p-3 text-2xl uppercase">Chat-GPT Codex app</p>
-        </div>
-        {data.map(({ id, isAi, text }) => (
-          <Chat isAi={isAi} text={text} key={id} />
-        ))}
-        {loading && <HorizontalLoader />}
-      </div>
-      <TextArea
-        onInput={(e) =>
-          (e.currentTarget.style.height = e.currentTarget.scrollHeight + "px")
-        }
-        placeholder="Ask codex"
-        inputClassName="mt-2 rounded-lg shadow-xl"
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyUp={onKeyUp}
-        value={submitted ? "" : prompt}
-        suffix={
-          <button className="ml-2 mt-4" onClick={onsubmit}>
-            <MdOutlineSend size={50} />
-          </button>
-        }
-        // prefix={
-        //   <button className="mr-2 mt-4">
-        //     <MdOutlinePeople size={50} className="text-white" />
-        //   </button>
-        // }
+    <Box width="100vw" height="100vh" position="relative">
+      <Image
+        src="/assets/chatGpt.webp"
+        alt="OpenAi"
+        quality={100}
+        fill
+        sizes="100vw"
+        style={{
+          zIndex: -1,
+        }}
       />
-    </>
+      <Container fixed>
+        <Header
+          text="Go home"
+          to="/"
+          otherClasses="shadow-lg shadow-cyan-500/50"
+          color="#f9ca24"
+        />
+      </Container>
+      <Container maxWidth="md">
+        <div className="flex flex-col">
+          <div
+            className="scroller flex h-[70vh] w-full flex-col space-y-6 overflow-y-auto px-6"
+            ref={ref}
+          >
+            {!data.length && (
+              <motion.p
+                initial={{ y: 18000 }}
+                animate={{ y: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 20,
+                  // duration: 500,
+                }}
+                className="flex justify-center text-center text-4xl text-white"
+              >
+                Chat messages will be here
+              </motion.p>
+            )}
+            {data.map(({ id, isAi, text }) => (
+              <Chat
+                isAi={isAi}
+                text={text}
+                key={id}
+                scrollBottom={scrollBottom}
+              />
+            ))}
+            {loading && <HorizontalLoader />}
+          </div>
+          <TextArea
+            placeholder="Ask codex"
+            inputClassName="mt-2 rounded-xl shadow-xl"
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyUp={onKeyUp}
+            value={submitted ? "" : prompt}
+            suffix={
+              <button className="ml-2 mt-4 text-white" onClick={onsubmit}>
+                <MdOutlineSend size={50} />
+              </button>
+            }
+          />
+        </div>
+      </Container>
+    </Box>
   );
 };
 
