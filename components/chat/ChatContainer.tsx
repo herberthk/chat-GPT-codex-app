@@ -9,6 +9,8 @@ import Image from "next/image";
 import Container from "@mui/material/Container";
 import Header from "./Header";
 import { motion } from "framer-motion";
+import Typography from "@mui/material/Typography";
+import { TypeAnimation } from "react-type-animation";
 interface Data {
   isAi: boolean;
   text: string;
@@ -93,23 +95,30 @@ const ChatContainer = () => {
       <Container maxWidth="md">
         <div className="flex flex-col">
           <div
-            className="scroller flex h-[70vh] w-full flex-col space-y-6 overflow-y-auto px-6"
+            className="scroller flex h-[70vh] w-full flex-col space-y-6 overflow-y-auto overflow-x-hidden px-6"
             ref={ref}
           >
             {!data.length && (
-              <motion.p
-                initial={{ y: 18000 }}
-                animate={{ y: 0 }}
+              <Typography
+                fontFamily={`'Julee', cursive`}
+                component={motion.p}
+                initial={{ scale: 0, y: -300 }}
+                animate={{ scale: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 260,
                   damping: 20,
                   // duration: 500,
+                  delay: 0.8,
                 }}
                 className="flex justify-center text-center text-4xl text-white"
               >
-                Chat messages will be here
-              </motion.p>
+                <TypeAnimation
+                  sequence={["Chat messages will be here", 4000]}
+                  //speed={75} // Custom Speed from 1-99 - Default Speed: 40
+                  wrapper="span" // Animation will be rendered as a <span>
+                />
+              </Typography>
             )}
             {data.map(({ id, isAi, text }) => (
               <Chat

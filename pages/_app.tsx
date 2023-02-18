@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import PageTransitions from "../components/layout/Transition";
 
 const theme = createTheme({
   components: {
@@ -25,7 +26,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <PageTransitions>
+          <Component {...pageProps} />
+        </PageTransitions>
       </ThemeProvider>
     </>
   );

@@ -42,13 +42,14 @@ const TextArea: FC<TextAreaProps> = ({
 }) => {
   return (
     <motion.div
-      initial={{ y: -18000 }}
-      animate={{ y: 0 }}
+      initial={{ scale: 0, y: -300 }}
+      animate={{ scale: 1, y: 0 }}
       transition={{
         type: "spring",
         stiffness: 260,
         damping: 20,
         // duration: 500,
+        delay: 1,
       }}
       className="mx-auto flex w-full flex-col"
     >

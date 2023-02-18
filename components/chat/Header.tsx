@@ -22,13 +22,14 @@ const Header: FC<Props> = ({ text, to, otherClasses, color }) => {
     >
       <Typography
         component={motion.p}
-        initial={{ x: 18000 }}
-        animate={{ x: 0 }}
+        initial={{ scale: 0, x: 300 }}
+        animate={{ scale: 1, x: 0 }}
         transition={{
           type: "spring",
           stiffness: 260,
           damping: 20,
           // duration: 500,
+          delay: 0.6,
         }}
         fontFamily={`'Monoton', cursive`}
         fontSize={34}
@@ -46,6 +47,7 @@ const Header: FC<Props> = ({ text, to, otherClasses, color }) => {
           type: "spring",
           stiffness: 260,
           damping: 20,
+          delay: 0.6,
         }}
         whileHover={{
           scale: 1.2,

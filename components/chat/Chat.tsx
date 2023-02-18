@@ -40,10 +40,7 @@ const Chat: FC<Props> = ({ isAi, text, scrollBottom }) => {
         damping: 20,
         // duration: 500,
       }}
-      className={classNames(
-        "flex justify-between",
-        `${isAi && "flex-row-reverse space-x-4"}`
-      )}
+      className={classNames("flex", `${isAi && "flex-row-reverse"}`)}
     >
       <div
         className={classNames(
@@ -62,9 +59,8 @@ const Chat: FC<Props> = ({ isAi, text, scrollBottom }) => {
 
       <div
         className={classNames(
-          "max-w-[75%] break-words rounded-2xl  p-3 text-left shadow-xl",
-          isAi ? "bg-white" : "bg-[#6ab04c]",
-          isAi ? "text-black" : "text-white"
+          "max-w-[65%] break-words rounded-lg  p-3 text-left shadow-xl",
+          isAi ? "mr-8 bg-white text-black" : "ml-8 bg-[#6ab04c] text-white"
         )}
         ref={ref}
       >

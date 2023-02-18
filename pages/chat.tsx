@@ -1,9 +1,11 @@
 import ChatContainer from "../components/chat/ChatContainer";
+import Meta from "../components/meta/Meta";
 
 const Chat = () => (
-  //   <main className="container flex h-[100vh] flex-col justify-between pb-5 text-center">
-  <ChatContainer />
-  //   </main>
+  <>
+    <Meta />
+    <ChatContainer />
+  </>
 );
 
 export default Chat;

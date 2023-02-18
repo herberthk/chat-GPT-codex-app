@@ -35,12 +35,13 @@ const Landing = () => {
           maxWidth="sm"
           p={1.4}
           component={motion.p}
-          initial={{ scale: 0, rotate: 180 }}
-          animate={{ rotate: 0, scale: 1 }}
+          initial={{ scale: 0, x: -300 }}
+          animate={{ x: 0, scale: 1 }}
           transition={{
             type: "spring",
             stiffness: 260,
             damping: 20,
+            delay: 0.8,
           }}
         >
           Experience the power of Chat-GPT Artificial intelligence models from
@@ -56,12 +57,13 @@ const Landing = () => {
           boxShadow="0 0 20px #34bfff"
           maxWidth="sm"
           component={motion.p}
-          initial={{ scale: 0, y: -1800 }}
-          animate={{ y: 0, scale: 1 }}
+          initial={{ scale: 0, y: 400 }}
+          animate={{ scale: 1, y: 0 }}
           transition={{
             type: "spring",
             stiffness: 260,
             damping: 20,
+            delay: 1,
           }}
         >
           <TypeAnimation
