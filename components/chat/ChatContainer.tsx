@@ -11,6 +11,8 @@ import Header from "./Header";
 import { motion } from "framer-motion";
 import Typography from "@mui/material/Typography";
 import { TypeAnimation } from "react-type-animation";
+import { toast } from "react-toastify";
+import axios from "axios";
 interface Data {
   isAi: boolean;
   text: string;
@@ -36,32 +38,41 @@ const ChatContainer = () => {
 
     setData([...copy, { text: prompt, isAi: false, id: generateUniqueId() }]);
     setSubmitted(true);
-    // scrollBottom();
+    setLoading(true);
     try {
-      setLoading(true);
-      const res = await (
-        await fetch("/api", {
-          method: "POST",
-          body: JSON.stringify({ prompt }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-      ).json();
-      setPrompt("");
-      setLoading(false);
-      // console.log("response", res);
+      // const res = await (
+      //   await fetch("/api", {
+      //     method: "POST",
+      //     body: JSON.stringify({ prompt }),
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   })
+      // ).json();
+      const res = await axios.post("/api", { prompt });
       setData((d) => [
         ...d,
-        { text: res.bot, isAi: true, id: generateUniqueId() },
+        { text: res.data.bot, isAi: true, id: generateUniqueId() },
       ]);
       ref.current!.scrollTop = ref.current!.scrollHeight;
+      setPrompt("");
     } catch (error) {
       setLoading(false);
+      toast.error("Something went wrong try again", {
+        closeOnClick: true,
+        progress: undefined,
+      });
+      toast.error("But relax", {
+        closeOnClick: true,
+        progress: undefined,
+      });
+      toast.error("Sometimes ChatGPT servers become busy", {
+        closeOnClick: true,
+        progress: undefined,
+      });
     } finally {
       setLoading(false);
       setSubmitted(false);
-      // scrollBottom();
     }
   };
 
@@ -104,6 +115,7 @@ const ChatContainer = () => {
                 component={motion.p}
                 initial={{ scale: 0, y: -300 }}
                 animate={{ scale: 1, y: 0 }}
+                fontSize={27}
                 transition={{
                   type: "spring",
                   stiffness: 260,

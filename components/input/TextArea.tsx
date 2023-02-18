@@ -51,10 +51,10 @@ const TextArea: FC<TextAreaProps> = ({
         // duration: 500,
         delay: 1,
       }}
-      className="mx-auto flex w-full flex-col"
+      className="relative mx-auto flex w-full flex-col"
     >
       {label && <p className="text-lg">{label}</p>}
-      <div className="flex w-full justify-between">
+      <div className="absolute bottom-[-5rem] left-0 flex w-full justify-between">
         {preFix}
         <TextareaAutosize
           className={classNames(

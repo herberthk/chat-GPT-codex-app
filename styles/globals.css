@@ -5,7 +5,7 @@
 
 @layer components{
   .input{
-    @apply focus:border-blue-400 border-2 border-transparent bg-gray-200 p-6 text-base outline-none;
+    @apply focus:border-blue-400 border-2 border-transparent bg-gray-200 p-4 text-base outline-none;
   }
 }
 * {
